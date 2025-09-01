@@ -4,22 +4,21 @@ The primary purpose of this assignment is to practice:
 1. Running tests on your code, and
 2. Uploading your assignments to GitHub
 
-You can watch [this video](https://www.youtube.com/watch?v=8Kue74yURcQ&ab_channel=JacobSteffen) or read [this tutorial](https://www.dropbox.com/scl/fi/tuug12w6d38frqzyjsseo/Running-Tests-Uploading-Assignments-to-GitHub.pdf?rlkey=u7lcb5gknx9xao9o8in26vgi3&st=tjwu1tr6&dl=0) for instructions on both of those. The actual code you will write and submit just involves gathering inputs, doing simple math, and printing out some statements. Put your code in the ***a2_submitting_to_github.py*** file. Do not edit or delete any other files.
+You can watch [this video](https://www.youtube.com/watch?v=8Kue74yURcQ&ab_channel=JacobSteffen) or read [this tutorial](https://www.dropbox.com/scl/fi/tuug12w6d38frqzyjsseo/Running-Tests-Uploading-Assignments-to-GitHub.pdf?rlkey=u7lcb5gknx9xao9o8in26vgi3&st=tjwu1tr6&dl=0) for instructions on both of those. The actual code you will write and submit just involves gathering inputs, doing simple math, and printing out some statements. Put your code in the ***a01_submitting_to_github.py*** file. Do not edit or delete any other files.
 
 ## Logical Flow
-1. Before doing any of this, make sure you watch the video linked above, or read the instructions so you understand how to run the tests included with the assignment and how to turn the assignment in.
+1. Before starting, make sure you're following along with the video linked above so you understand how to run the tests included with the assignment and how to turn the assignment in.
 2. Using the `input()` function, ask the user:
     - `Please enter a whole number: `
     - Assume that the user will always enter a valid whole number.
     - Store the number in a variable
 3. Convert the number to an `int` datatype.
-4. Divide the inputted by 2 and store the result
-    - You can do this on a separate lines, or combined with other lines of code. How exactly you code this (and most everything in this class) is up to you.
+4. Divide the inputted number by 2 and store the result
+    - You can do steps 2-4 each on separate lines, or combine multiple steps on a single line. In this class, there are almost always many ways you can write valid code. As long as it fulfills the requirements in the instructions, you'll get full points.
 4. Print out the message:
     - `<number from input> divided by 2 is <new number>.`
     - But with actual values. For example, if the user entered *10*, then the message should display as:
     - `10 divided by 2 is 5.0.`
-
 
 Be sure to include comments in your code. Push your code to your GitHub repository in order to receive credit for the assignment
 
