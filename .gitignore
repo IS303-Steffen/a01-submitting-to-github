@@ -9,6 +9,8 @@ test_cases_drafts.json
 markdown_generated.md
 movies.db
 a01_solution_submitting_to_github
+TEST_RESULTS_SUMMARY.md
+test_scores.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
