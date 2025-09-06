@@ -1,0 +1,77 @@
+name: Grade and Report to Google Sheets
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]' && github.actor != 'jacobsteffenBYU'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # pytest for tests, gspread/google-auth for Sheets, python-dotenv for conftest to read tests/.env
+          pip install pytest gspread google-auth python-dotenv
+
+      # Load environment from tests/.env so we can reuse STUDENT_FILE as the assignment tab
+      - name: Load assignment env
+        run: |
+          set -a
+          source tests/.env
+          set +a
+          echo "ASSIGNMENT_TAB=$STUDENT_FILE" >> "$GITHUB_ENV"
+
+      - name: Run tests (don’t fail job if tests fail)
+        run: |
+          pytest -q || true
+
+      - name: Show produced files
+        run: |
+          ls -la
+          echo "---- tests/test_scores.csv ----"
+          [ -f tests/test_scores.csv ] && cat tests/test_scores.csv || echo "tests/test_scores.csv not found"
+          echo "---- TEST_RESULTS_SUMMARY.md (head) ----"
+          [ -f TEST_RESULTS_SUMMARY.md ] && head -n 50 TEST_RESULTS_SUMMARY.md || echo "TEST_RESULTS_SUMMARY.md not found"
+
+      - name: Upload test result artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            tests/test_scores.csv
+            TEST_RESULTS_SUMMARY.md
+          if-no-files-found: ignore
+
+      - name: Report score to Google Sheets
+        env:
+          SHEETS_SERVICE_ACCOUNT_JSON: ${{ secrets.SHEETS_SERVICE_ACCOUNT_JSON }}
+          COURSE_SHEET_ID: ${{ secrets.COURSE_SHEET_ID }}
+          ASSIGNMENT_TAB: ${{ env.ASSIGNMENT_TAB }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          # Defensive: if scores file is missing, create a 0-score CSV so the script still runs
+          if [ ! -f tests/test_scores.csv ]; then
+            mkdir -p tests
+            echo 'test_id,passed_cases,total_cases,points_awarded,max_score,points_per_case' > tests/test_scores.csv
+            echo 'TOTAL,,,,0,' >> tests/test_scores.csv
+          fi
+
+          python .github/scripts/report_to_sheets.py \
+            --sheet-id "$COURSE_SHEET_ID" \
+            --tab "$ASSIGNMENT_TAB" \
+            --username "$GITHUB_ACTOR" \
+            --commit "$GITHUB_SHA" \
+            --scores-csv "tests/test_scores.csv"
+

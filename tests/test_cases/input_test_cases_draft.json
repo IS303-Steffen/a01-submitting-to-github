@@ -13,7 +13,9 @@
         ],
         "invalid_input_prompts": [],
         "invalid_printed_messages": [
-            "256 divided by 2 is 128.0"
+            "0 divided by 2 is 0.0",
+            "-100 divided by 2 is -50.0",
+            "15 divided by 2 is 7.5"
         ],
         "bools": {},
         "ints": {
@@ -29,30 +31,92 @@
     },
     {
         "id_input_test_case": 2,
-        "input_test_case_description": "Using 256 as input",
+        "input_test_case_description": "Using 0 as input",
         "inputs": [
-            "256"
+            "0"
         ],
         "input_prompts": [
             "Please enter a whole number: "
         ],
         "printed_messages": [
-            "256 divided by 2 is 128.0"
+            "0 divided by 2 is 0.0"
         ],
         "invalid_input_prompts": [],
         "invalid_printed_messages": [
+            "-100 divided by 2 is -50.0",
+            "10 divided by 2 is 5.0",
+            "15 divided by 2 is 7.5"
+        ],
+        "bools": {},
+        "ints": {
+            "number": 0
+        },
+        "strings": {},
+        "floats": {
+            "new_number": 0.0
+        },
+        "lists": {},
+        "dicts": {},
+        "example_output": "Please enter a whole number: 0\n0 divided by 2 is 0.0"
+    },
+    {
+        "id_input_test_case": 3,
+        "input_test_case_description": "Using 15 as input",
+        "inputs": [
+            "15"
+        ],
+        "input_prompts": [
+            "Please enter a whole number: "
+        ],
+        "printed_messages": [
+            "15 divided by 2 is 7.5"
+        ],
+        "invalid_input_prompts": [],
+        "invalid_printed_messages": [
+            "0 divided by 2 is 0.0",
+            "-100 divided by 2 is -50.0",
             "10 divided by 2 is 5.0"
         ],
         "bools": {},
         "ints": {
-            "number": 256
+            "number": 15
         },
         "strings": {},
         "floats": {
-            "new_number": 128.0
+            "new_number": 7.5
         },
         "lists": {},
         "dicts": {},
-        "example_output": "Please enter a whole number: 256\n256 divided by 2 is 128.0"
+        "example_output": "Please enter a whole number: 15\n15 divided by 2 is 7.5"
+    },
+    {
+        "id_input_test_case": 4,
+        "input_test_case_description": "Using -100 as input",
+        "inputs": [
+            "-100"
+        ],
+        "input_prompts": [
+            "Please enter a whole number: "
+        ],
+        "printed_messages": [
+            "-100 divided by 2 is -50.0"
+        ],
+        "invalid_input_prompts": [],
+        "invalid_printed_messages": [
+            "0 divided by 2 is 0.0",
+            "10 divided by 2 is 5.0",
+            "15 divided by 2 is 7.5"
+        ],
+        "bools": {},
+        "ints": {
+            "number": -100
+        },
+        "strings": {},
+        "floats": {
+            "new_number": -50.0
+        },
+        "lists": {},
+        "dicts": {},
+        "example_output": "Please enter a whole number: -100\n-100 divided by 2 is -50.0"
     }
 ]
