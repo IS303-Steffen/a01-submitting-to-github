@@ -12,7 +12,6 @@ import pytest, re, sys, os, json, traceback, pickle, inspect, multiprocessing, \
 from io import StringIO
 from collections.abc import Iterable
 from datetime import date, timedelta
-from dotenv import load_dotenv
 
 # ====================
 # LOCAL MODULE IMPORTS
@@ -28,11 +27,26 @@ sys.path.append(test_cases_path)
 from class_test_cases import test_cases_classes_dict # type: ignore
 from function_test_cases import test_cases_functions_dict # type: ignore
 
+def load_env_file(path):
+    if not os.path.exists(path):
+        return
+    with open(path, "r") as f:
+        for line in f:
+            line = line.strip()
+            # skip comments and blank lines
+            if not line or line.startswith("#"):
+                continue
+            if "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")  # remove wrapping quotes if present
+            os.environ.setdefault(key, value)  # don't overwrite existing env
 
 # ================
 # GLOBAL VARIABLES
 # ================
-load_dotenv(dotenv_path=os.path.join(current_dir, ".env"))
+load_env_file(os.path.join(current_dir, ".env"))
 # Enter the name of the file to be tested here, but leave out the .py file extention.
 solution_module = os.getenv("SOLUTION_FILE")
 student_module = os.getenv("STUDENT_FILE")
