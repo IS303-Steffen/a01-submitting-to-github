@@ -31,18 +31,53 @@ def get_total_from_csv(csv_path: str) -> float:
     return float(total_row.get("points_awarded", 0) or 0)
 
 def ensure_tab(gc, sheet_id: str, tab_name: str):
+    """Get or create a worksheet named `tab_name`, and ensure it has the header row.
+    Idempotent even if multiple jobs run or the sheet already exists."""
+    tab_name = tab_name.strip()
     sh = gc.open_by_key(sheet_id)
+
+    # 1) Try to fetch it first
     try:
         ws = sh.worksheet(tab_name)
-    except gspread.WorksheetNotFound:
-        ws = sh.add_worksheet(title=tab_name, rows=1000, cols=len(ASSIGNMENT_COLUMNS))
-        ws.append_row(ASSIGNMENT_COLUMNS)
-    else:
-        # Ensure header exists & matches (lightweight)
-        hdr = ws.row_values(1)
-        if [h.strip() for h in hdr] != ASSIGNMENT_COLUMNS:
-            # Optionally: rewrite header (non-destructive if columns differ)
-            ws.update("A1", [ASSIGNMENT_COLUMNS])
+    except gspread.exceptions.WorksheetNotFound:
+        # 2) Try to create; if a race creates it first, fetch again
+        try:
+            ws = sh.add_worksheet(title=tab_name, rows=1000, cols=len(ASSIGNMENT_COLUMNS))
+        except gspread.exceptions.APIError as e:
+            # If the error message says it already exists, fetch it now
+            msg = str(e)
+            try:
+                # gspread>=6 exposes response; be defensive
+                err_json = e.response.json()
+                msg = err_json.get("error", {}).get("message", msg)
+            except Exception:
+                pass
+            if "already exists" in msg.lower():
+                ws = sh.worksheet(tab_name)
+            else:
+                raise
+
+    # 3) Ensure header row is present and correct (idempotent)
+    try:
+        first_row = ws.row_values(1)
+    except Exception:
+        first_row = []
+    if [c.strip() for c in first_row] != ASSIGNMENT_COLUMNS:
+        # If row 1 is empty, append; otherwise, update row 1 in place
+        if not first_row:
+            ws.append_row(ASSIGNMENT_COLUMNS)
+        else:
+            # Update A1:Fx where F = number of columns
+            end_col = len(ASSIGNMENT_COLUMNS)
+            # Build A1-notation range (A..Z..AA if you ever grow columns)
+            def col_letter(n):
+                s = ""
+                while n:
+                    n, r = divmod(n - 1, 26)
+                    s = chr(65 + r) + s
+                return s
+            ws.update(f"A1:{col_letter(end_col)}1", [ASSIGNMENT_COLUMNS])
+
     return ws
 
 def upsert_row(ws, username: str, total_score: float, commit_sha: str):
