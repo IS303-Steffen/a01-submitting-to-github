@@ -4,7 +4,7 @@ The primary purpose of this assignment is to practice:
 1. Running tests on your code, and
 2. Uploading your assignments to GitHub
 
-You can watch [this video](https://www.youtube.com/watch?v=8Kue74yURcQ&ab_channel=JacobSteffen) or read [this tutorial](https://www.dropbox.com/scl/fi/tuug12w6d38frqzyjsseo/Running-Tests-Uploading-Assignments-to-GitHub.pdf?rlkey=u7lcb5gknx9xao9o8in26vgi3&st=tjwu1tr6&dl=0) for instructions on both of those. The actual code you will write and submit just involves gathering inputs, doing simple math, and printing out some statements. Put your code in the ***a01_submitting_to_github.py*** file. Do not edit or delete any other files.
+You can watch [this video](https://www.youtube.com/watch?v=yt-fd55CofY&ab_channel=ProfSteffen) for a guided tutorial. The actual code you will write and submit just involves gathering inputs, doing simple math, and printing out some statements. Put your code in the ***a01_submitting_to_github.py*** file. Do not edit or delete any other files.
 
 ## Logical Flow
 1. Before starting, make sure you're following along with the video linked above so you understand how to run the tests included with the assignment and how to turn the assignment in.
