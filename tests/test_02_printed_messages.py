@@ -44,6 +44,7 @@ def test_02_printed_messages(current_test_name, input_test_cases):
             captured_lines = captured_output.splitlines()
             # Normalize the captured input prompts to remove spaces, punctuation, and symbols
             normalized_captured_print_statements_list = [normalize_text(captured_print) for captured_print in captured_lines]
+            normalized_captured_print_statements_list = [re.sub(r'\d+(?:\.\d+)?', round_match, captured_print) for captured_print in normalized_captured_print_statements_list]
             normalized_captured_print_statements_str = ' '.join(normalized_captured_print_statements_list)
             normalized_captured_print_statements_list = list(dict.fromkeys(normalized_captured_print_statements_list)) # get rid of duplicates
             # create string of all print statements to search for for matches.
@@ -58,6 +59,7 @@ def test_02_printed_messages(current_test_name, input_test_cases):
             # Check that each required phrase (regex pattern) is found in the normalized captured output
             for expected_phrase in expected_printed_messages:
                 expected_phrase = normalize_text(expected_phrase)
+                expected_phrase = re.sub(r'\d+(?:\.\d+)?', round_match, expected_phrase)
 
                 # Check if the pattern exists in the normalized captured print statements
                 match = re.search(expected_phrase, normalized_captured_print_statements_str)
@@ -79,7 +81,7 @@ def test_02_printed_messages(current_test_name, input_test_cases):
                                         f"#### Possible spelling mistakes:\n"
                                         f"To help you rule out possible cause #1, below are printed messages that appear in your code that are really close the the printed message you're missing.\n"
                                         f"```\n{similarity_message}\n```\n"
-                                        f"#### All your input prompts:\n"
+                                        f"#### All your printed messages:\n"
                                         f"Below are all the unique printed messages from when the test ran your code (ignoring punctuation and capitalization). Make sure you are including the needed message and spelling it correctly!:\n\n"
                                         f"```\n{error_message_print_statements_str}\n```\n"),
                         current_test_name=current_test_name,

@@ -1,8 +1,7 @@
 # Stuff prof steffen added
 *solution*.py
 *solution*.xlsx
-~$*.xlsx
-.vscode*
+~$*.xlsxx
 student_test_module.py
 test_cases_table_output.html
 test_cases_drafts.json
