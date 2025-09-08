@@ -23,15 +23,14 @@ You can watch [this video](https://www.youtube.com/watch?v=8Kue74yURcQ&ab_channe
 Be sure to include comments in your code. Be sure to run the tests in the testing tab to see what score you'll get.
 Push your code to your GitHub repository in order to receive credit for the assignment.
 
-## Example Output
-
-```
-Please enter a whole number: 10
-10 divided by 2 is 5.0.
-```
-
 ## Rubric
 - See `Rubric.md` for details on each of the tests you're scored on.
 - To see what score you'll receive, run the tests using the testing tab (it looks like a beaker).
     - In the testing tab, press `Configure Python Tests`, then choose `pytest`, then `tests`, and then press the `Run Tests` button.
     - To see your results and any error messages, right click the `TEST_RESULTS_SUMMARY.md` file and choose `Open Preview`.
+
+## Example Output
+```
+Please enter a whole number: 10
+10 divided by 2 is 5.0.
+```
