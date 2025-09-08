@@ -31,4 +31,7 @@ Please enter a whole number: 10
 ```
 
 ## Rubric
-See `Rubric.md` for details on each of the tests. To see what score you'll receive, run the tests using the testing tab and then check the `TEST_RESULTS_SUMMARY.md` file. Remember to open it by right clicking and choosing `Open Preview` to make it more readable.
+- See `Rubric.md` for details on each of the tests you're scored on.
+- To see what score you'll receive, run the tests using the testing tab (it looks like a beaker).
+    - In the testing tab, press `Configure Python Tests`, then choose `pytest`, then `tests`, and then press the `Run Tests` button.
+    - To see your results and any error messages, right click the `TEST_RESULTS_SUMMARY.md` file and choose `Open Preview`.
