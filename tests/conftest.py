@@ -301,15 +301,15 @@ def pytest_sessionfinish(session, exitstatus=None):
 # ====================
 
 class PartialCreditRecorder:
-    def __init__(self, test_id: str, max_score: float | None = None):
+    def __init__(self, test_id, max_score = None):
         self.test_id = test_id
         self.max_score = (float(max_score) if max_score is not None else None)
         self.cases = []  # list of dicts: {id, passed: bool, reason: str|None, custom_message: str|None}
 
-    def pass_case(self, case_id, note: str | None = None):
+    def pass_case(self, case_id, note = None):
         self.cases.append({"id": case_id, "passed": True, "reason": note, "custom_message": None})
 
-    def fail_case(self, case_id, reason: str | None = None, custom_message: str | None = None):
+    def fail_case(self, case_id, reason = None, custom_message = None):
         self.cases.append({"id": case_id, "passed": False, "reason": reason, "custom_message": custom_message})
 
     def results(self):
@@ -321,9 +321,9 @@ class PartialCreditRecorder:
         return {"total": total, "passed": passed, "per_case": per_case, "points": points}
 
 
-PC_RESULTS: dict[str, PartialCreditRecorder] = {}
+PC_RESULTS = {}
 
-def pc_get_or_create(test_id: str, max_score: float | None = None) -> PartialCreditRecorder:
+def pc_get_or_create(test_id, max_score = None) -> PartialCreditRecorder:
     rec = PC_RESULTS.get(test_id)
     if rec is None:
         rec = PartialCreditRecorder(test_id, max_score)
@@ -355,7 +355,7 @@ def pc_finalize_and_maybe_fail(rec: PartialCreditRecorder):
     else:
         print(summary_line)
 
-def record_failure(current_test_name, *, formatted_message: str, input_test_case=None, case_id: str | None = None, reason: str = "exception"):
+def record_failure(current_test_name, *, formatted_message, input_test_case=None, case_id = None, reason = "exception"):
     """
     Unified failure logger:
       - Records a failure into PartialCreditRecorder.
