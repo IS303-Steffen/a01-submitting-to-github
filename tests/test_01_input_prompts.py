@@ -86,7 +86,7 @@ def test_01_input_prompts(current_test_name, input_test_cases):
                 if match:
                     formatted = format_error_message(
                         custom_message=("You used an invalid input() prompt (ignoring punctuation and capitalization):\n\n"
-                                        f"```\"{invalid_phrase}\"\n```\n"
+                                        f"```\n\"{invalid_phrase}\"\n```\n"
                                         f"### How to fix it:\n"
                                         f"Most likely:\n"
                                         f"1. You are asking for an input that should be inside an if statement or while loop, but isn't.\n"
